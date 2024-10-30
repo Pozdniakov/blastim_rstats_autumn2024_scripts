@@ -71,3 +71,8 @@ which(12 %% seq_len(12) == 0)
 
 factors <- function(x) which(x %% seq_len(x) == 0)
 factors(200)
+
+
+# Семейство функций apply() -----------------------------------------------
+
+
