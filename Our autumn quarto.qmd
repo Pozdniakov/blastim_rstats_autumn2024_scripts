@@ -1,0 +1,123 @@
+---
+title: "Our very autumn Quarto"
+author: "Ivan"
+format: pptx
+editor: visual
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+## Выделение полужирным и выделение курсивом
+
+**Полужирный** вот такой и **полужирный** вот такой
+
+*Курсив* вот такой и *курсив* вот такой
+
+### Подзаголовок
+
+#### Подзаголовок поменьше
+
+##### Подзаголовок вообще маленький жестб
+
+###### господи боже мой какой милый подзаголовочек
+
+## Списки
+
+Списки бывают:
+
+-   пронумерованными
+-   непронумерованными
+
+## Гиперссылки и картинки
+
+[Ссылка на материалы про Quarto](https://pozdniakov.github.io/tidy_stats/250-rmarkdown.html#sec-quarto)
+
+![если вы видете эту надпись, значит, картинка не прогрузилась](https://r4ds.hadley.nz/images/quarto-flow.png)
+
+## Цитаты
+
+> Принимающему большую власть подобает большой ум иметь
+
+## Сабскрипты-суперскрипты
+
+Текст обычный ^текст^ ^надстрочный^ ~текст_подстрочный~ superscript^2^
+
+subscript~2~
+
+~~зачеркнуто~~
+
+## Latex формулы
+
+Число $\pi$ равно `r pi`
+
+$$\cos (2\theta) = \cos^2 \theta - \sin^2 \theta $$
+
+## Чанки с кодом
+
+```         
+какой-то какод
+```
+
+```{r}
+2 + 2
+```
+
+```{r}
+#| message: false
+library(tidyverse)
+```
+
+```{r}
+#| warning: false
+as.numeric(c("3", "three"))
+```
+
+```{r}
+heroes <- read_csv("https://raw.githubusercontent.com/Pozdniakov/tidy_stats/refs/heads/master/data/heroes_information.csv",
+                   na = c("-99", "-", "", "NA"))
+```
+
+## Таблицы
+
+```{r}
+heroes
+```
+
+```{r}
+library(DT)
+datatable(heroes, 
+          class = "compact",
+          style = "bootstrap4",
+          extensions = 'FixedColumns') %>%
+  DT::formatStyle(columns = TRUE, fontSize = '50%')
+```
+
+## Визуализация данных
+
+```{r}
+gg_heroes <- ggplot(heroes) +
+  geom_point(aes(x = Height, y = Weight, colour = Alignment)) +
+  scale_y_log10() +
+  scale_x_log10() +
+  labs(title = "Weight and Height of superheroes") +
+  hrbrthemes::theme_ipsum()
+gg_heroes
+```
+
+```{r}
+library(plotly)
+ggplotly(gg_heroes)
+```
+
+```{r}
+library(echarts4r)
+# prepare data
+df <- state.x77 |> 
+  as.data.frame() |> 
+  tibble::rownames_to_column("State")
+df |> 
+  e_charts(x = State) |> # initialise and set x
+  e_line(serie = Population) # add a line
+```
